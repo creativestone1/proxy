@@ -27,7 +27,18 @@ The program accepts incoming traffic and routes it through the OpenVPN proxy, "h
 
 git clone <your-repo-URL>
 
-2. Build the program (if needed)
+2. Build the program (if needed):
+- create build directory(if it does not exist)
+```bash
+mkdir build
+```
+
+- build into "build" directory
+```bash
+cd build
+cmake ../
+make
+```
 
 3. Make sure OpenVPN is installed on your system.
 
@@ -51,12 +62,7 @@ remotePort=5001
 
 [Accept]
 localPort=7001
-connectionsCount=2
-
-[Connect]
-remoteIp=127.0.0.1
-remotePort=5002
-
+connectionsCount=1
 
 ---
 

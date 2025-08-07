@@ -1,0 +1,15 @@
+[Host]
+CLIENT
+
+[Connect]
+remoteIp=127.0.0.1
+remotePort=5001
+
+[Accept]
+localPort=7001
+connectionsCount=2
+
+[Connect]
+remoteIp=127.0.0.1
+remotePort=5002
+
