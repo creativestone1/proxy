@@ -28,7 +28,8 @@ set(INCLUDE_DIRS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/config
 )
 
-#----compiling----
+#----linking----
 add_executable(proxy ${SOURCES})
+target_link_options(proxy PRIVATE "-static")
 target_include_directories(proxy PRIVATE ${INCLUDE_DIRS})
 

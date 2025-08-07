@@ -47,12 +47,11 @@ make
 ## Usage
 
 ./proxy
-(in folder there must be config.txt file)
 
 
-- In the configuration file, specify tunnel parameters
+- In the configuration file (config.txt), specify tunnel parameters
 - Example configuration:
-
+```config.txt
 [Host]
 CLIENT
 
@@ -63,7 +62,7 @@ remotePort=5001
 [Accept]
 localPort=7001
 connectionsCount=1
-
+```
 ---
 
 ## Supported Obfuscation Algorithms
