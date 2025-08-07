@@ -1,22 +1,34 @@
-cmake_minimum_required(VERSION 3.8)
-project(my_project)
-
-# Генерируем compile_commands.json для LSP
+cmake_minimum_required(VERSION 3.10)
+project(proxy VERSION 0.1.0)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-file(GLOB_RECURSE HEADERS "include/*.h")
-
-# Создаём исполняемый файл из исходников (на заголовочные файлы можно убрать, они не компилируются)
-add_executable(${PROJECT_NAME} ${SOURCES})
-
-# Указываем папки для поиска заголовков — подключаем include и дополнительные include внутри include
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+#----SOURCES----
+set(NET_SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/net/ConnectionCreator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/net/ConnectionHandler.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/net/IOMultiplexer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/net/MessageProcessors.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/net/ProxySessionHandler.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/src/net/SocketEventProcessor.cpp
+)
+set(ADDITIONAL_DEPENDENCIES_SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/src/additional_dependencies/SockUtils.cpp
+)
+set(SOURCES
+	${NET_SOURCES}
+	${ADDITIONAL_DEPENDENCIES_SOURCES}
+	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
-# Настройка путей вывода собранных файлов
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)   # для exe
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)   # для shared libs
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)   # для static libs
+#----INCLUDE_DIRS----
+set(INCLUDE_DIRS
+	${CMAKE_CURRENT_SOURCE_DIR}/include/net
+	${CMAKE_CURRENT_SOURCE_DIR}/include/additional_dependencies
+	${CMAKE_CURRENT_SOURCE_DIR}/include/config
+)
+
+#----compiling----
+add_executable(proxy ${SOURCES})
+target_include_directories(proxy PRIVATE ${INCLUDE_DIRS})
 
